@@ -1,0 +1,1 @@
+alertify.success('Mail verifier avec succes veuillez vous connecter!!!');
