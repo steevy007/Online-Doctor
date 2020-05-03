@@ -414,7 +414,7 @@ AuthFilter::mustConnect();
                                                         <?php
                                                         if ($_SESSION['session']['id'] != $objet->id) {
                                                         ?>
-                                                            <a class="btn btn-outline-info mt-2"><i class="fas fa-plus"></i>
+                                                            <a href="../App/Controller/sendRequest.ctrl.php?myId=<?= $_SESSION['session']['id']?>&id_user=<?= $objet->id ?>" class="btn btn-outline-info mt-2"><i class="fas fa-plus"></i>
                                                                 Suivre</a>
                                                         <?php
                                                         }

@@ -31,7 +31,9 @@ if ($_POST) {
             $message = 'Le numero doit contenir 8 caracter';
         } else if (strlen($tel) > 8) {
             $message = 'Le numero doit contenir 8 caracter';
-        } else if (User::verifyNumber($tel) === false) {
+        } else if (!is_numeric($tel)) {
+            $message = 'veuillez saisir des chiffres pour le numero';
+        }else if (User::verifyNumber($tel) === false) {
             $message = 'Telephone Existant';
         } else if (empty($message)) {
             if (!empty($AncP)) {
@@ -68,7 +70,9 @@ if ($_POST) {
             $message = 'Le numero doit contenir 8 caracter';
         } else if (strlen($tel) > 8) {
             $message = 'Le numero doit contenir 8 caracter';
-        } else if (User::verifyNumber($tel) === false) {
+        } else if (!is_numeric($tel)) {
+            $message = 'veuillez saisir des chiffres pour le numero';
+        }else if (User::verifyNumber($tel) === false) {
             $message = 'Telephone Existant';
         } else if (empty($message)) {
             if (!empty($AncP)) {
