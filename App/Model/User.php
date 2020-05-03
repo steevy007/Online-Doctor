@@ -60,7 +60,7 @@ class User
         $conn = $insDB->getConn();
         try {
             $req = $conn->prepare("UPDATE users SET nom=?,prenom=?,adressePers=?,adresseClinic=?,specialite=?,telephone=?,description=? WHERE id=?");
-            $req->execute([$this->firstName, $this->lastName, $this->personnalAdress, $this->clinicalAdress, $this->speciality, $this->phoneNumber, $this->description,$id]);
+            $req->execute([$this->firstName, $this->lastName, $this->personnalAdress, $this->clinicalAdress, $this->speciality, $this->phoneNumber, $this->description, $id]);
             if ($req) {
                 return true;
             }
@@ -69,41 +69,42 @@ class User
         }
     }
 
-    public static function editPassword($id,$password)
+    public static function editPassword($id, $password)
     {
         $insDB = Singleton::getInsDB();
         $conn = $insDB->getConn();
-        try{
-            $req=$conn->prepare("UPDATE users SET password=? WHERE id=?");
-            $req->execute([$password,$id]);
-        }catch(\Exception $e){
-            die('Error '.$e);
+        try {
+            $req = $conn->prepare("UPDATE users SET password=? WHERE id=?");
+            $req->execute([$password, $id]);
+        } catch (\Exception $e) {
+            die('Error ' . $e);
         }
     }
 
-    public static function verifyPassword($id,$password){
+    public static function verifyPassword($id, $password)
+    {
         $insDB = Singleton::getInsDB();
         $conn = $insDB->getConn();
-        try{
-            $req=$conn->prepare("SELECT password FROM users WHERE id=?");
+        try {
+            $req = $conn->prepare("SELECT password FROM users WHERE id=?");
             $req->execute([$id]);
-            $data=$req->fetch(\PDO::FETCH_ASSOC);
-            if($req->rowCount()==1){
-                $passwBase=$data['password'];
-                if(password_verify($password,$passwBase)){
+            $data = $req->fetch(\PDO::FETCH_ASSOC);
+            if ($req->rowCount() == 1) {
+                $passwBase = $data['password'];
+                if (password_verify($password, $passwBase)) {
                     return true;
-                }else{
+                } else {
                     return false;
                 }
             }
-        }catch(\Exception $e){
-            die('Error :'.$e);
+        } catch (\Exception $e) {
+            die('Error :' . $e);
         }
     }
 
     public static function verifyNumber($number){
-        $insDB = Singleton::getInsDB();
-        $conn = $insDB->getConn();
+        $insDB=Singleton::getInsDB();
+        $conn=$insDB->getConn();
         try{
             $req=$conn->prepare("SELECT * FROM users WHERE telephone=?");
             $req->execute(['+509'.$number]);
@@ -116,6 +117,7 @@ class User
             die('Error :'.$e);
         }
     }
+
 
     public static function verifyEmail($email)
     {
@@ -150,17 +152,18 @@ class User
         }
     }
 
-    public static function getAllUser(){
+    public static function getAllUser()
+    {
         $insDB = Singleton::getInsDB();
         $conn = $insDB->getConn();
-        try{
-            $req=$conn->prepare("SELECT * FROM users WHERE etat=?");
+        try {
+            $req = $conn->prepare("SELECT * FROM users WHERE etat=?");
             $req->execute(['Active']);
-            if($req){
+            if ($req) {
                 return $req;
             }
-        }catch(\Exception $e){
-            die('Error '.$e);
+        } catch (\Exception $e) {
+            die('Error ' . $e);
         }
     }
 

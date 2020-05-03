@@ -130,7 +130,6 @@ AuthFilter::mustConnect();
                         <div class="row form-group">
                             <div class="col-md-12 text-right">
                                 <input type="submit" name="submit" id="submit" value="Modifier" class="btn btn-primary  py-2 px-5">
-                                <a href="" class="btn btn-outline-warning">Annuler</a>
                             </div>
                         </div>
 

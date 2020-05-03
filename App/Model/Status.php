@@ -53,7 +53,7 @@ class Status
         $insDB = Singleton::getInsDB();
         $conn = $insDB->getConn();
         try {
-            $req = $conn->prepare("SELECT count($id_post) as nb_like FROM like_status WHERE id_post=?");
+            $req = $conn->prepare("SELECT count(id) as nb_like FROM like_status WHERE id_post=?");
             $req->execute([$id_post]);
             $data = $req->fetch(\PDO::FETCH_ASSOC);
             if ($req) {
@@ -70,7 +70,7 @@ class Status
         $insDB = Singleton::getInsDB();
         $conn = $insDB->getConn();
         try {
-            $req = $conn->prepare("SELECT count($id_post) as nb_dislike FROM dislike WHERE id_post=?");
+            $req = $conn->prepare("SELECT count(id) as nb_dislike FROM dislike WHERE id_post=?");
             $req->execute([$id_post]);
             $data = $req->fetch(\PDO::FETCH_ASSOC);
             if ($req) {
@@ -92,8 +92,8 @@ class Status
                     $req->execute([$id_post, $id]);
                 }else{
                     try{
-                        $req=$conn->prepare("DELETE FROM dislike WHERE id_post=?");
-                        $req->execute([$id_post]);
+                        $req=$conn->prepare("DELETE FROM dislike WHERE id_user=?");
+                        $req->execute([$id]);
                         if($req){
                             self::Like($id,$id_post);
                         }
@@ -125,8 +125,8 @@ class Status
                     $req->execute([$id_post, $id]);
                 }else{
                     try{
-                        $req=$conn->prepare("DELETE FROM like_status WHERE id_post=?");
-                        $req->execute([$id_post]);
+                        $req=$conn->prepare("DELETE FROM like_status WHERE id_user=?");
+                        $req->execute([$id]);
                         if($req){
                             self::Disike($id,$id_post);
                         }

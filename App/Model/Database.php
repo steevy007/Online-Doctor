@@ -2,8 +2,8 @@
 namespace App\Model;
 class Connect
 {
-    private $USERNAME = "root";
-    private $PASSWORD = "";
+    private $USERNAME = "id13509939_steevy";
+    private $PASSWORD = "P^>(aZg9#24b4(i_";
     private  $conn;
     private static $insDB;
 

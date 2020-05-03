@@ -30,7 +30,7 @@ class Inscription extends Singleton
         $this->speciality=$speciality;
         $this->password=$password;
         $this->description=$description;
-        $this->verify='non';
+        $this->verify='oui';
     }
 
 
@@ -39,8 +39,13 @@ class Inscription extends Singleton
         $insDB=parent::getInsDB();
         $conn=$insDB->getConn();
         try{
-            $req=$conn->prepare("INSERT INTO inscriptions(nom,prenom,adressePers,adresseClinic,email,specialite,telephone,password,description,typeUser,verifier,created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,NOW())");
-            $req->execute([$this->firstName,$this->lastName,$this->personnalAdress,$this->clinicalAdress,$this->email,$this->speciality,$this->phoneNumber,$this->password,$this->description,$this->typeUser,$this->verify]);
+            $req=$conn->prepare("INSERT INTO users(nom,prenom,adressePers,adresseClinic,email,specialite,telephone,password,description,typeUser,created_at) VALUES(?,?,?,?,?,?,?,?,?,?,NOW())");
+            $req->execute([$this->firstName,$this->lastName,$this->personnalAdress,$this->clinicalAdress,$this->email,$this->speciality,$this->phoneNumber,$this->password,$this->description,$this->typeUser]);
+            if($req){
+                return true;
+            }else{
+                return false;
+            }
         }catch(\Exception $e){
             die ('Error :'.$e);
         }finally{

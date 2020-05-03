@@ -25,7 +25,7 @@ class Authentification extends Singleton{
                        $DBPassword=$objet->password;
                        if(password_verify($this->password,$DBPassword)){
                             $_SESSION['session']['id']=$objet->id;
-                            $_SESSION['session']['email']=$objet->email;  
+                            $_SESSION['session']['email']=$objet->email;    
                             $_SESSION['session']['typeUser']=$objet->typeUser;     
                        }else{
                            self::$Message='password incorrect';

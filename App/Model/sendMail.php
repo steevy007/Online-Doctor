@@ -29,25 +29,60 @@ class Mail{
         ";
         $mail=new PHPMailer();
         $mail->IsSMTP(); // enable SMTP
+        $mail->SMTPDebug = 3;
         $mail->SMTPAuth = true;  // authentication enabled
         $mail->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
         $mail->SMTPAutoTLS = false;
-        $mail->Host = 'smtp.gmail.com';
+        $mail->Host ='smtp.gmail.com';
         $mail->Port = 587;
         $mail->isHTML();
         $mail->Username =self::GUSER;  
         $mail->Password = self::GPWD;
         $mail->SetFrom(self::GUSER,'Online Doctor');
         $mail->Body=$body;
+        $mail->AltBody = 'Message Non Supporter';
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
         $mail->Subject = 'Validation de mail';
         $mail->AddAddress($to,$nom);
         if(!$mail->Send()) {
-            return false;
+            //return false;
+            var_dump($mail->ErrorInfo);
         } else {
             return true;
+            
         }
         $mail->smtpClose();
     }
+
+
+    
+    public static function sendMail($to,$nom,$prenom){
+
+        $body="
+        <head>
+            <style>
+               h1{
+                   color:red;
+               }
+            </style>
+        </head>
+        <body>
+            <h1>Hello $nom $prenom ,<h1/>
+            <p>
+               Bienvenue Nous vous Prions de bien vouloir cliquer sur ce lien <a href='http://localhost:8000//App/Controller/ActiverCompte.ctrl.php?email=$to&token=$token'> Activez Mon Compte </a> pour pouvoir activer votre compye
+            <p/>
+        </body>
+        </html>
+        ";
+
+    }
+
 }
 
 

@@ -234,6 +234,13 @@ session_start();
     <?php require_once __DIR__.'/../Partials/loader.php' ?>
 
     <?php require_once __DIR__.'/../Ressources/footer.js.php' ?>
+    <?php
+	if (isset($_GET['connect']) and $_GET['connect'] === 'true') {
+	?>
+    <script src="../Public/JS/welcomeUser.js"></script>
+	<?php
+	}
+	?>
 </body>
 
 </html>

@@ -61,7 +61,7 @@ AuthFilter::alreadyConnect();
 
 	<?php require_once '../Ressources/footer.js.php' ?>
 	<?php
-	if (isset($_GET['verify']) and $_GET['verify'] === 'true') {
+	if (isset($_GET['register']) and $_GET['register'] === 'true') {
 	?>
 		<script src="../Public/JS/verifyTrue.js"></script>
 

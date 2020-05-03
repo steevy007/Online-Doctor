@@ -59,12 +59,14 @@ $(document).ready(function () {
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
-                        title: 'Un Mail De confirmation vous a ete envoye',
+                        //title: 'Un Mail De confirmation vous a ete envoye',
+                        title: 'Inscription realise avec succes',
                         showConfirmButton: false,
-                        timer: 3500
+                        timer: 2000
                       })
                         setTimeout(function(){
-                            document.location.href = '../Pages/Home.php';
+                            //document.location.href = '../Pages/Home.php';
+                            document.location.href = '../Pages/Login.php?register=true';
                         },3000);
                         
 

@@ -15,7 +15,7 @@ $(document).ready(function () {
                 if(result!='success'){
                     alertify.warning(result);
                 }else{
-                    document.location.href = '../Pages/Home.php';
+                    document.location.href = '../Pages/Home.php?connect=true';
                 }
             }
         });
