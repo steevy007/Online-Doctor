@@ -47,8 +47,13 @@ class Friend extends Singleton{
                 $objet=$req->fetch(\PDO::FETCH_OBJ);
                self::$User=new User($objet->id,$objet->nom,$objet->prenom,$objet->typeUser,$objet->adressePers,$objet->adresseClinic,$objet->email,$objet->specialite,$objet->telephone,$objet->password,$objet->description);
                 if(self::$User!=null){
+<<<<<<< HEAD
                     $req=$conn->prepare("SELECT COUNT(myId) AS nomberFriend FROM friends");
                     $req->execute();
+=======
+                    $req=$conn->prepare("SELECT COUNT(myId) AS nomberFriend FROM friends WHERE idFriend=?");
+                    $req->execute([$id]);
+>>>>>>> version-develloppement
                     $data=$req->fetch(\PDO::FETCH_ASSOC);
                     
                     return $data['nomberFriend'];
