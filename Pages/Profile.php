@@ -414,7 +414,7 @@ button {
                                                         if ($_GET['id'] == $_SESSION['session']['id']) {
                                                       
                                                         ?>
-                                                        <a class="btn btn-outline-info mt-2"><i
+                                                        <a href="../Pages/RequestFriend?id=<?= $objet->id ?>" class="btn btn-outline-info mt-2"><i
                                                                 class="fab fa-meetup"></i>
                                                             <span><?= Friend::getRequest($objet->id) ?></span> Friend
                                                             Request</a>
