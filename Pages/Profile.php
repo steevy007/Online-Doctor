@@ -596,7 +596,7 @@ AuthFilter::mustConnect();
     <script src="../Public/JS/status.js"></script>
     <script src="../Public/JS/postStat.js"></script>
     <script src="../Public/JS/TraitPostStatus.js"></script>
-    
+    //done
 </body>
 
 </html>
