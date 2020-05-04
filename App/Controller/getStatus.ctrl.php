@@ -31,8 +31,8 @@ if ($result->rowCount() != 0) {
                     <!---->
                 </div>
                 <div class="text-right">
-                    <a  href="../App/Controller/LikeStatus.ctrl.php?id_user=<?= $_SESSION['session']['id'] ?>&id_post=<?= $value->id ?>" style="color:green" class="text-secondaire" id="s_like"><span><?= Status::getNbLike($value->id) ?></span>&nbsp;<i class="far fa-thumbs-up "  ></i></a>
-                    <a href="../App/Controller/DisLikeStatus.ctrl.php?id_user=<?= $_SESSION['session']['id'] ?>&id_post=<?= $value->id ?>" style="color:red" class="text-secondaire"><span><?= Status::getDisLike($value->id) ?></span>&nbsp;<i class="far fa-thumbs-down " id="dislike"></i></a>
+                    <a  href="../App/Controller/LikeStatus.ctrl.php?id_p=<?= $_SESSION['identifiant'] ?>&id_user=<?= $_SESSION['session']['id'] ?>&id_post=<?= $value->id ?>" style="color:green" class="text-secondaire" id="s_like"><span><?= Status::getNbLike($value->id) ?></span>&nbsp;<i class="far fa-thumbs-up "  ></i></a>
+                    <a href="../App/Controller/DisLikeStatus.ctrl.php?id_p=<?= $_SESSION['identifiant'] ?>&id_user=<?= $_SESSION['session']['id'] ?>&id_post=<?= $value->id ?>" style="color:red" class="text-secondaire"><span><?= Status::getDisLike($value->id) ?></span>&nbsp;<i class="far fa-thumbs-down " id="dislike"></i></a>
                     </div>
             
                 <div class="v-dialog__container" style="display: block;"></div>
