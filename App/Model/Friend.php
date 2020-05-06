@@ -94,7 +94,7 @@ class Friend extends Singleton
         $conn = $inDB->getConn();
         try {
             $req = $conn->prepare("SELECT * FROM friends WHERE idFriend=? AND myId=? AND accepted=?");
-            $req->execute([ $myid,$idUser, 'non']);
+            $req->execute([ $idUser,$myid, 'non']);
             if ($req->rowCount() == 1) {
                 return true;
             }
@@ -144,6 +144,23 @@ class Friend extends Singleton
         try {
             $req = $conn->prepare("SELECT * From friends  WHERE idFriend=? AND myId=? AND accepted=?");
             $req->execute([$myid, $id, 'oui']);
+            if ($req->rowCount() == 1) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (\Exception $e) {
+        }
+    }
+
+    
+    public static function verifyIfFriendAccepted($id, $myid)
+    {
+        $inDB = Singleton::getInsDB();
+        $conn = $inDB->getConn();
+        try {
+            $req = $conn->prepare("SELECT * From friends  WHERE idFriend=? AND myId=? AND accepted=?");
+            $req->execute([$myid,$id ,'non']);
             if ($req->rowCount() == 1) {
                 return false;
             } else {

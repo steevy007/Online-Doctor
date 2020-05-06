@@ -400,23 +400,24 @@ AuthFilter::mustConnect();
                                                         <a href="mailto:<?= $objet->email ?>"><i class="fas fa-at fa-2x"></i></a>
                                                     </h6>
                                                     <h6 class="d-block ">
-                                                      <?php //= Friend::getNumberFriend($objet->id) === 0 ? 'Aucune Relation &nbsp; <a class="btn btn-outline-primary btn-sm">Faire Des Relation</a>' : $_SESSION['session']['id']==$objet->id?Friend::getNumberFriendP($objet->id) . ' Contact  <a class="btn btn-outline-primary btn-sm">Visualiser</a> ':Friend::getNumberFriend($objet->id) . ' Contact  <a class="btn btn-outline-primary btn-sm">Visualiser</a> ' */?>
-                                                      <?php
-                                                     // echo $objet->id.' '.$_SESSION['session']['id'];
-                                                        if($objet->id==$_SESSION['session']['id']){
-                                                            if(Friend::getNumberFriend($_SESSION['session']['id']) == 0 ){
-                                                               echo 'Aucune Relation &nbsp; <a class="btn btn-outline-primary btn-sm">Faire Des Relation</a>' ;
-                                                            }else{
-                                                                echo Friend::getNumberFriend($_SESSION['session']['id']).' Amis <a class="btn btn-outline-primary btn-sm">Visualiser</a> ';
+                                                        <?php //= Friend::getNumberFriend($objet->id) === 0 ? 'Aucune Relation &nbsp; <a class="btn btn-outline-primary btn-sm">Faire Des Relation</a>' : $_SESSION['session']['id']==$objet->id?Friend::getNumberFriendP($objet->id) . ' Contact  <a class="btn btn-outline-primary btn-sm">Visualiser</a> ':Friend::getNumberFriend($objet->id) . ' Contact  <a class="btn btn-outline-primary btn-sm">Visualiser</a> ' */
+                                                        ?>
+                                                        <?php
+                                                        // echo $objet->id.' '.$_SESSION['session']['id'];
+                                                        if ($objet->id == $_SESSION['session']['id']) {
+                                                            if (Friend::getNumberFriend($_SESSION['session']['id']) == 0) {
+                                                                echo 'Aucune Relation &nbsp; <a class="btn btn-outline-primary btn-sm">Faire Des Relation</a>';
+                                                            } else {
+                                                                echo Friend::getNumberFriend($_SESSION['session']['id']) . ' Amis <a class="btn btn-outline-primary btn-sm">Visualiser</a> ';
                                                             }
-                                                        }else{
-                                                            if(Friend::getNumberFriend($objet->id) == 0){
-                                                                echo 'Aucune Relation &nbsp; <a class="btn btn-outline-primary btn-sm">Faire Des Relation</a>' ;
-                                                            }else{
-                                                                echo Friend::getNumberFriend($objet->id).' Amis <a class="btn btn-outline-primary btn-sm">Visualiser</a> ';
+                                                        } else {
+                                                            if (Friend::getNumberFriend($objet->id) == 0) {
+                                                                echo 'Aucune Relation &nbsp; <a class="btn btn-outline-primary btn-sm">Faire Des Relation</a>';
+                                                            } else {
+                                                                echo Friend::getNumberFriend($objet->id) . ' Amis <a class="btn btn-outline-primary btn-sm">Visualiser</a> ';
                                                             }
                                                         }
-                                                      ?>
+                                                        ?>
                                                     </h6>
 
 
@@ -425,7 +426,7 @@ AuthFilter::mustConnect();
                                                         if ($_GET['id'] == $_SESSION['session']['id']) {
 
                                                         ?>
-                                                            <a href="../Pages/RequestFriend?id=<?= $objet->id ?>" class="btn btn-outline-info mt-2"><i class="fab fa-meetup"></i>
+                                                            <a href="../Pages/RequestFriend.php?id=<?= $objet->id ?>" class="btn btn-outline-info mt-2"><i class="fab fa-meetup"></i>
                                                                 <span><?= Friend::getRequest($objet->id) ?></span> Friend
                                                                 Request</a>
                                                         <?php
@@ -443,11 +444,18 @@ AuthFilter::mustConnect();
                                                             } else {
                                                                 if (Friend::verifyIfFriend($objet->id, $_SESSION['session']['id']) === true) {
                                                                     // echo $objet->id .' '. $_SESSION['session']['id'];
+                                                                    if (Friend::verifyIfFriendAccepted($objet->id, $_SESSION['session']['id']) === true) {
                                                                 ?>
-                                                                    <a href="../App/Controller/sendRequest.ctrl.php?myId=<?= $_SESSION['session']['id'] ?>&id_user=<?= $objet->id ?>" class="btn btn-outline-info mt-2"><i class="fas fa-plus"></i>
-                                                                        Suivre</a>
+                                                                        <a href="../App/Controller/sendRequest.ctrl.php?myId=<?= $_SESSION['session']['id'] ?>&id_user=<?= $objet->id ?>" class="btn btn-outline-info mt-2"><i class="fas fa-plus"></i>
+                                                                            Suivre</a>
+                                                                    <?php
+                                                                    } else {
+                                                                    ?>
+                                                                        <a class="btn btn-outline-info mt-2"><i class="fas fa-plus"></i>
+                                                                             Demande En Attente</a>
                                                         <?php
-                                                                }else{
+                                                                    }
+                                                                } else {
                                                                     echo 'Connecte';
                                                                 }
                                                             }

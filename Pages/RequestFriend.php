@@ -8,6 +8,7 @@ use App\Model\User;
 $req= Friend::getAllRequestFriend($_GET['id']);
 $objet=$req->fetchAll(\PDO::FETCH_OBJ);
 AuthFilter::mustConnect();
+AuthFilter::mustBeAdmin($_GET['id']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
