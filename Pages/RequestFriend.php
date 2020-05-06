@@ -3,7 +3,10 @@ session_start();
 require_once '../App/init.php';
 
 use App\Model\AuthFilter;
-
+use App\Model\Friend;
+use App\Model\User;
+$req= Friend::getAllRequestFriend($_GET['id']);
+$objet=$req->fetchAll(\PDO::FETCH_OBJ);
 AuthFilter::mustConnect();
 ?>
 <!DOCTYPE html>
@@ -15,7 +18,7 @@ AuthFilter::mustConnect();
     <link rel="stylesheet" href="../Public/CSS/styleP.css">
     <link rel="stylesheet" href="../Public/CSS/styleRequest.css">
     <style>
-     
+
     </style>
 </head>
 
@@ -26,43 +29,45 @@ AuthFilter::mustConnect();
         <h1 class="text-2">Request | Friend</h1>
     </div>
 
-    <section>
-            <div class="container testimonials">
-                <div class="row mb-2">
-                    <div class="col-md-8 testimonial">
-                        <div class="row">
-                            <div class="avatar col-md-5">
-                                <a href="#">
-                                    <img class="img-circle" src="https://bootdey.com/img/Content/user_3.jpg" alt="Taylor Otwell">
-                                </a>
-                            </div>
+    <section class="container id_sec mb-4 mt-4">
+        <div class="row" id="request_friend">
+            <div class="col-md-8 mb-4">
+                <?php
+                foreach ($objet as $value) {
+                    if($req->rowCount()!==0){
+                ?>
+                    <div class="testimonials">
+                        <div class="row mb-2 id_p">
+                            <div class="col-md-12 testimonial">
+                                <div class="row ">
+                                    <div class="avatar col-md-5">
+                                        <a href="#">
+                                            <img class="img-circle size_img" src="<?= User::getAvatar($value->email) ?>" alt="Avatar" width="105px">
+                                        </a>
+                                    </div>
 
-                            <div class="testimonial-main col-md-7">
-                                <h4 class="media-heading"><a href="#m">Owenl Ollyt</a></h4>
-                                <a href="" class="text-success"><i class="fas fa-check fa-2x"></i></a>
-                                <a href="" class="text-danger"><i class="far fa-times-circle fa-2x"></i></a>
+                                    <div class="testimonial-main col-md-7">
+                                        <h4><?= $value->nom .' '.$value->prenom ?></h4>
+                                        <a href="../App/Controller/AcceptedFriend.ctrl.php?id=<?= $value->myId ?>" class="text-success"><i class="fas fa-check fa-2x"></i></a>
+                                        <a href="../App/Controller/RejectFriend.ctrl.php?id=<?= $value->myId ?>" class="text-danger"><i class="far fa-times-circle fa-2x"></i></a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-md-8 testimonial">
-                        <div class="row">
-                            <div class="avatar col-md-5">
-                                <a href="#">
-                                    <img class="img-circle" src="https://bootdey.com/img/Content/user_3.jpg" alt="Taylor Otwell">
-                                </a>
-                            </div>
-
-                            <div class="testimonial-main col-md-7">
-                                <h4 class="media-heading"><a href="#m">Owenl Ollyt</a></h4>
-                                <a href="" class="text-success"><i class="fas fa-check fa-2x"></i></a>
-                                <a href="" class="text-danger"><i class="far fa-times-circle fa-2x"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                }else
+                echo '<h1>Aucune Demande</h1>';
+            }
+                ?>
             </div>
+
+
+            <div class="col-md-4 mt-4">
+                <h3>Lorem ipsum dolor sit amet.</h3>
+            </div>
+        </div>
+
     </section>
 
 
