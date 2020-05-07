@@ -406,7 +406,7 @@ AuthFilter::mustConnect();
                                                         // echo $objet->id.' '.$_SESSION['session']['id'];
                                                         if ($objet->id == $_SESSION['session']['id']) {
                                                             if (Friend::getNumberFriend($_SESSION['session']['id']) == 0) {
-                                                                echo 'Aucune Relation &nbsp; <a class="btn btn-outline-primary btn-sm">Faire Des Relation</a>';
+                                                                echo "Aucune Relation &nbsp; <a href='../Pages/ListUser.php' class='btn btn-outline-primary btn-sm'>Faire Des Relation</a>";
                                                             } else {
                                                                 echo Friend::getNumberFriend($_SESSION['session']['id']) . ' Amis <a class="btn btn-outline-primary btn-sm">Visualiser</a> ';
                                                             }
@@ -438,7 +438,7 @@ AuthFilter::mustConnect();
                                                             if (Friend::verifyRequest($_SESSION['session']['id'], $objet->id)) {
 
                                                         ?>
-                                                                <a href="" class="btn btn-outline-info mt-2"><i class="fas fa-plus"></i>
+                                                                <a href="../App/Controller/CancelRequest.ctrl.php?id=<?= $objet->id ?>" class="btn btn-outline-info mt-2"><i class="fas fa-plus"></i>
                                                                     Annuler Demande</a>
                                                                 <?php
                                                             } else {
@@ -456,7 +456,7 @@ AuthFilter::mustConnect();
                                                         <?php
                                                                     }
                                                                 } else {
-                                                                    echo 'Connecte';
+                                                                    echo "<i class='fas fa-check-circle ' style='color:green'></i> Connecte";
                                                                 }
                                                             }
                                                         }
@@ -650,6 +650,10 @@ AuthFilter::mustConnect();
     } else if (isset($_GET['id']) and isset($_GET['isFriend'])) {
         if ($_GET['isFriend'] == 'true') {
             echo "<script>alertify.success('Vous Etes Maintenant connecte');</script>";
+        }
+    }else if (isset($_GET['cancelRequest']) and isset($_GET['id'])) {
+        if ($_GET['cancelRequest'] == 'true') {
+            echo "<script>alertify.success('Demande Annuler');</script>";
         }
     }
     //echo $_GET['request'];

@@ -4,8 +4,10 @@ require_once '../App/init.php';
 
 use App\Model\User;
 use App\Model\Singleton;
-$dataReq= User::getAllUser();
-$data=$dataReq->fetchAll(\PDO::FETCH_ASSOC);
+use App\Model\Friend;
+
+$dataReq = User::getAllUser();
+$data = $dataReq->fetchAll(\PDO::FETCH_ASSOC);
 $nbre_total_articles = $dataReq->rowCount();
 $nbre_articles_par_page = 28;
 $nbre_pages_max_gauche_et_droite = 2;
@@ -27,46 +29,45 @@ $limit = 'LIMIT ' . ($page_num - 1) * $nbre_articles_par_page . ',' . $nbre_arti
 $pagination = '';
 $pagination = '';
 
-if($last_page != 1){
-    if($page_num > 1){
+if ($last_page != 1) {
+    if ($page_num > 1) {
         $previous = $page_num - 1;
-        $pagination.='<li class="prev "><a href="../Pages/ListUser.php?page='.$previous.'">&lt;</a></li>';
+        $pagination .= '<li class="prev "><a href="../Pages/ListUser.php?page=' . $previous . '">&lt;</a></li>';
         //$pagination .= '<a href="../Pages/ListUser.php?page='.$previous.'">Précédent</a> &nbsp; &nbsp;';
 
-        for($i = $page_num - $nbre_pages_max_gauche_et_droite; $i < $page_num; $i++){
-            if($i > 0){
-                $pagination.='<li><a href="../Pages/ListUser.php?page='.$i.'">'.$i.'</a></li>';
+        for ($i = $page_num - $nbre_pages_max_gauche_et_droite; $i < $page_num; $i++) {
+            if ($i > 0) {
+                $pagination .= '<li><a href="../Pages/ListUser.php?page=' . $i . '">' . $i . '</a></li>';
                 //$pagination .= '<a href="../Pages/ListUser.php?page='.$i.'">'.$i.'</a> &nbsp;';
             }
         }
     }
-    $pagination.='<li class="active"><a href="#">'.$page_num.'</a></li>';
+    $pagination .= '<li class="active"><a href="#">' . $page_num . '</a></li>';
     //$pagination .= '<span class="active">'.$page_num.'</span>&nbsp;';
 
-    for($i = $page_num+1; $i <= $last_page; $i++){
-        $pagination.='<li><a href="../Pages/ListUser.php?page='.$i.'">'.$i.'</a></li>';
+    for ($i = $page_num + 1; $i <= $last_page; $i++) {
+        $pagination .= '<li><a href="../Pages/ListUser.php?page=' . $i . '">' . $i . '</a></li>';
         //$pagination .= '<a href="../Pages/ListUser.php?page='.$i.'">'.$i.'</a> ';
-        
-        if($i >= $page_num + $nbre_pages_max_gauche_et_droite){
+
+        if ($i >= $page_num + $nbre_pages_max_gauche_et_droite) {
             break;
         }
     }
 
-    if($page_num != $last_page){
+    if ($page_num != $last_page) {
         $next = $page_num + 1;
-        $pagination.='<li class="next"><a href="../Pages/ListUser.php?page='.$next.'">&gt;</a></li>';
-       // $pagination .= '<a href="../Pages/ListUser.php?page='.$next.'">Suivant</a> ';
+        $pagination .= '<li class="next"><a href="../Pages/ListUser.php?page=' . $next . '">&gt;</a></li>';
+        // $pagination .= '<a href="../Pages/ListUser.php?page='.$next.'">Suivant</a> ';
     }
 }
-$inDB=Singleton::getInsDB();
-$conn=$inDB->getConn();
-$pureData=[];
-try{
-    $sql=$conn->prepare("SELECT *  FROM users WHERE etat=? AND email!=? ORDER BY id ASC $limit");
-    $sql->execute(['Active',isset($_SESSION['session']['email'])?$_SESSION['session']['email']:'']);
-    $pureData=$sql->fetchAll(\PDO::FETCH_ASSOC);
-}catch(\Exception $e){
-
+$inDB = Singleton::getInsDB();
+$conn = $inDB->getConn();
+$pureData = [];
+try {
+    $sql = $conn->prepare("SELECT *  FROM users WHERE etat=? AND email!=? ORDER BY id ASC $limit");
+    $sql->execute(['Active', isset($_SESSION['session']['email']) ? $_SESSION['session']['email'] : '']);
+    $pureData = $sql->fetchAll(\PDO::FETCH_ASSOC);
+} catch (\Exception $e) {
 }
 //var_dump($pureData);
 ?>
@@ -117,11 +118,10 @@ try{
                                     </div>
                                     <div class="team-content">
                                         <h4 class="name"><?= $user['nom'] . ' ' . $user['prenom'] ?></h4>
-                                        <h4 class="title"><?= $user['typeUser']=='Medecin'?'<i class="fas fa-user-md fa-2x text-dark"></i> &nbsp '.$user['specialite']:'<i class="fas fa-user-circle fa-2x text-muted"></i> &nbsp Simple User' ?></h4>
+                                        <h4 class="title"><?= $user['typeUser'] == 'Medecin' ? '<i class="fas fa-user-md fa-2x text-dark"></i> &nbsp ' . $user['specialite'] : '<i class="fas fa-user-circle fa-2x text-muted"></i> &nbsp Simple User' ?></h4>
                                     </div>
                                     <ul class="social">
                                         <li><a href="../Pages/Profile.php?id=<?= $user['id'] ?>" class="far fa-eye" aria-hidden="true"></a></li>
-                                        <li><a href="https://codepen.io/collection/XdWJOQ/" class="fas fa-plus" aria-hidden="true"></a></li>
                                         <li><a href="https://codepen.io/collection/XdWJOQ/" class="fas fa-user-friends" aria-hidden="true"></a></li>
                                     </ul>
                                 </div>

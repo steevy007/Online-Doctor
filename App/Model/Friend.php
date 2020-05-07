@@ -42,6 +42,20 @@ class Friend extends Singleton
         }
     }
 
+    public static function cancelRequest($id,$myId){
+        $inDB = Singleton::getInsDB();
+        $conn = $inDB->getConn();
+        try{
+            $req=$conn->prepare("DELETE FROM friends WHERE idFriend=? AND myId=? AND accepted=?");
+            $req->execute([$id,$myId,'non']);
+            if($req){
+                return true;
+            }
+        }catch(\Exception $e){
+            die('Error '.$e);
+        }
+    }
+
     public static function getNumberFriend($id)
     {
         $inDB = Singleton::getInsDB();
@@ -159,9 +173,10 @@ class Friend extends Singleton
         $inDB = Singleton::getInsDB();
         $conn = $inDB->getConn();
         try {
-            $req = $conn->prepare("SELECT * From friends  WHERE idFriend=? AND myId=? AND accepted=?");
+            $req = $conn->prepare("SELECT count(*) as number From friends  WHERE idFriend=? AND myId=? AND accepted=?");
             $req->execute([$myid,$id ,'non']);
-            if ($req->rowCount() == 1) {
+            $data=$req->fetch(\PDO::FETCH_ASSOC);
+            if ($data['number'] == 1) {
                 return false;
             } else {
                 return true;
@@ -169,6 +184,7 @@ class Friend extends Singleton
         } catch (\Exception $e) {
         }
     }
+
 
 
     public static function getAllRequestFriend($id)

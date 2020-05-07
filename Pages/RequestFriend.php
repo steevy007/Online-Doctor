@@ -5,8 +5,9 @@ require_once '../App/init.php';
 use App\Model\AuthFilter;
 use App\Model\Friend;
 use App\Model\User;
-$req= Friend::getAllRequestFriend($_GET['id']);
-$objet=$req->fetchAll(\PDO::FETCH_OBJ);
+
+$req = Friend::getAllRequestFriend($_GET['id']);
+$objet = $req->fetchAll(\PDO::FETCH_OBJ);
 AuthFilter::mustConnect();
 AuthFilter::mustBeAdmin($_GET['id']);
 ?>
@@ -35,32 +36,32 @@ AuthFilter::mustBeAdmin($_GET['id']);
             <div class="col-md-8 mb-4">
                 <?php
                 foreach ($objet as $value) {
-                    if($req->rowCount()!==0){
+                    if ($req->rowCount() !== 0) {
                 ?>
-                    <div class="testimonials">
-                        <div class="row mb-2 id_p">
-                            <div class="col-md-12 testimonial">
-                                <div class="row ">
-                                    <div class="avatar col-md-5">
-                                        <a href="#">
-                                            <img class="img-circle size_img" src="<?= User::getAvatar($value->email) ?>" alt="Avatar" width="105px">
-                                        </a>
-                                    </div>
+                        <div class="testimonials">
+                            <div class="row mb-2 id_p">
+                                <div class="col-md-12 testimonial">
+                                    <div class="row ">
+                                        <div class="avatar col-md-5">
+                                            <a href="#">
+                                                <img class="img-circle size_img" src="<?= User::getAvatar($value->email) ?>" alt="Avatar" width="105px">
+                                            </a>
+                                        </div>
 
-                                    <div class="testimonial-main col-md-7">
-                                        <h4><?= $value->nom .' '.$value->prenom ?></h4>
-                                        <a href="../App/Controller/AcceptedFriend.ctrl.php?id=<?= $value->myId ?>" class="text-success"><i class="fas fa-check fa-2x"></i></a>
-                                        <a href="../App/Controller/RejectFriend.ctrl.php?id=<?= $value->myId ?>" class="text-danger"><i class="far fa-times-circle fa-2x"></i></a>
+                                        <div class="testimonial-main col-md-7">
+                                            <h4><?= $value->nom . ' ' . $value->prenom ?></h4>
+                                            <a href="../App/Controller/AcceptedFriend.ctrl.php?id=<?= $value->myId ?>" class="text-success"><i class="fas fa-check fa-2x"></i></a>
+                                            <a href="../App/Controller/RejectFriend.ctrl.php?id=<?= $value->myId ?>" class="text-danger"><i class="far fa-times-circle fa-2x"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                 <?php
-                }else
-                echo '<h1>Aucune Demande</h1>';
-            }
+                    }
+                }
                 ?>
+                <?= $req->rowCount()==0?'<h1>Aucune Demande</h1>':'' ?>
             </div>
 
 
