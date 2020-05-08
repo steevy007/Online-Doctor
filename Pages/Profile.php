@@ -408,13 +408,14 @@ AuthFilter::mustConnect();
                                                             if (Friend::getNumberFriend($_SESSION['session']['id']) == 0) {
                                                                 echo "Aucune Relation &nbsp; <a href='../Pages/ListUser.php' class='btn btn-outline-primary btn-sm'>Faire Des Relation</a>";
                                                             } else {
-                                                                echo Friend::getNumberFriend($_SESSION['session']['id']) . ' Amis <a class="btn btn-outline-primary btn-sm">Visualiser</a> ';
+                                                                echo Friend::getNumberFriend($objet->id) . " Amis <a href='../Pages/ListUserFriend.php?id=$objet->id' class='btn btn-outline-primary btn-sm'>Visualiser</a> ";
+                                                            
                                                             }
                                                         } else {
                                                             if (Friend::getNumberFriend($objet->id) == 0) {
                                                                 echo 'Aucune Relation &nbsp; <a class="btn btn-outline-primary btn-sm">Faire Des Relation</a>';
                                                             } else {
-                                                                echo Friend::getNumberFriend($objet->id) . ' Amis <a class="btn btn-outline-primary btn-sm">Visualiser</a> ';
+                                                                echo Friend::getNumberFriend($objet->id) . " Amis <a href='../Pages/ListUserFriend.php?id=$objet->id' class='btn btn-outline-primary btn-sm'>Visualiser</a> ";
                                                             }
                                                         }
                                                         ?>
