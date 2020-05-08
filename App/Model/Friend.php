@@ -201,6 +201,36 @@ class Friend extends Singleton
         }
     }
 
+    public static function getAllFriendList($id)
+    {
+        $inDB = Singleton::getInsDB();
+        $conn = $inDB->getConn();
+        try {
+            $req = $conn->prepare("SELECT * FROM users INNER JOIN friends WHERE users.id=friends.idFriend AND friends.myId=?");
+            $req->execute([$id]);
+            if ($req) {
+                return $req;
+            }
+        } catch (\Exception $e) {
+        }
+    }
+
+    public static function getFullNameUser($id){
+        $insDB = Singleton::getInsDB();
+        $conn = $insDB->getConn();
+        try {
+            $req = $conn->prepare("SELECT * FROM users INNER JOIN friends WHERE users.id=friends.myId AND friends.myId=? LIMIT 1");
+            $req->execute([$id]);
+            if($req){
+                $data=$req->fetch(\PDO::FETCH_ASSOC);
+                return $data['nom']. ' ' .$data['prenom'];
+            }
+            
+        } catch (\Exception $e) {
+            die('Error ' . $e);
+        }
+    }
+
 
     /**
      * Get the value of id

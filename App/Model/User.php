@@ -167,6 +167,8 @@ class User
         }
     }
 
+  
+
     public static function getAvatar($email)
     {
         return "https://www.gravatar.com/avatar/" . md5(strtolower(trim($email))) . "?d=" . urlencode("https://www.pngitem.com/pimgs/m/78-786314_computer-user-icon-peolpe-avatar-group-people-avatar.png") . "&s=" . 40;

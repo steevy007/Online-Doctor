@@ -2,166 +2,174 @@
 session_start();
 require_once '../App/init.php';
 
-use App\Model\AuthFilter;
+use App\Model\User;
+use App\Model\Singleton;
+use App\Model\Friend;
 
-AuthFilter::mustConnect();
+if (isset($_GET['id']) and  !empty($_GET['id']) and is_numeric($_GET['id'])) {
+    $dataReq = Friend::getAllFriendList($_GET['id']);
+} else {
+    header("Location:http://localhost/Online Doctor/Pages/Profile.php?id=308");
+    //http://localhost/Online%20Doctor/Pages/ListUserFriend.php?id=2
+}
+$data = $dataReq->fetchAll(\PDO::FETCH_ASSOC);
+$nbre_total_articles = $dataReq->rowCount();
+$nbre_articles_par_page = 16;
+$nbre_pages_max_gauche_et_droite = 2;
+$last_page = ceil($nbre_total_articles / $nbre_articles_par_page);
+if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+    $page_num = $_GET['page'];
+} else {
+    $page_num = 1;
+}
+
+if ($page_num < 1) {
+    $page_num = 1;
+} else if ($page_num > $last_page) {
+    $page_num = $last_page;
+}
+
+$limit = 'LIMIT ' . ($page_num - 1) * $nbre_articles_par_page . ',' . $nbre_articles_par_page;
+
+$pagination = '';
+$pagination = '';
+
+if ($last_page != 1) {
+    if ($page_num > 1) {
+        $previous = $page_num - 1;
+        $pagination .= '<li class="prev "><a href="../Pages/ListUser.php?page=' . $previous . '">&lt;</a></li>';
+        //$pagination .= '<a href="../Pages/ListUser.php?page='.$previous.'">Précédent</a> &nbsp; &nbsp;';
+
+        for ($i = $page_num - $nbre_pages_max_gauche_et_droite; $i < $page_num; $i++) {
+            if ($i > 0) {
+                $pagination .= '<li><a href="../Pages/ListUser.php?page=' . $i . '">' . $i . '</a></li>';
+                //$pagination .= '<a href="../Pages/ListUser.php?page='.$i.'">'.$i.'</a> &nbsp;';
+            }
+        }
+    }
+    $pagination .= '<li class="active"><a href="#">' . $page_num . '</a></li>';
+    //$pagination .= '<span class="active">'.$page_num.'</span>&nbsp;';
+
+    for ($i = $page_num + 1; $i <= $last_page; $i++) {
+        $pagination .= '<li><a href="../Pages/ListUser.php?page=' . $i . '">' . $i . '</a></li>';
+        //$pagination .= '<a href="../Pages/ListUser.php?page='.$i.'">'.$i.'</a> ';
+
+        if ($i >= $page_num + $nbre_pages_max_gauche_et_droite) {
+            break;
+        }
+    }
+
+    if ($page_num != $last_page) {
+        $next = $page_num + 1;
+        $pagination .= '<li class="next"><a href="../Pages/ListUser.php?page=' . $next . '">&gt;</a></li>';
+        // $pagination .= '<a href="../Pages/ListUser.php?page='.$next.'">Suivant</a> ';
+    }
+}
+$inDB = Singleton::getInsDB();
+$conn = $inDB->getConn();
+$pureData = [];
+try {
+    $sql = $conn->prepare("SELECT * FROM users INNER JOIN friends WHERE users.id=friends.idFriend AND friends.myId=? ORDER BY idFriend ASC $limit");
+    $sql->execute([$_GET['id']]);
+    $pureData = $sql->fetchAll(\PDO::FETCH_ASSOC);
+} catch (\Exception $e) {
+}
+//var_dump($pureData);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Online Doctor | User Friend</title>
+    <title>Online Doctor | List User </title>
     <?php require_once __DIR__ . '/../Ressources/head.css.php' ?>
-    <link rel="stylesheet" href="../Public/CSS/styleP.css">
-    <link rel="stylesheet" href="../Public/CSS/styleRequest.css">
-    <style>
-        .member-box {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            max-width: 300px;
-            margin: 20px auto;
-            font-family: 'Raleway', sans-serif;
-        }
-
-        .member-box .shape {
-            width: 200px;
-            height: 200px;
-            background: var(--primary);
-            opacity: 0.2;
-            position: absolute;
-            top: 0;
-            right: -100px;
-            transform: rotate(45deg);
-        }
-
-        .member-box .card-img-top {
-            position: relative;
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            margin: 20px auto;
-            text-align: center;
-            box-shadow: 0px 0px 0px 8px rgba(0, 0, 0, 0.06);
-            transition: box-shadow 0.3s ease;
-        }
-
-        .member-box:hover .card-img-top {
-            box-shadow: 0px 0px 0px 12px rgba(0, 0, 0, 0.1)
-        }
-
-        .member-box .member-degignation {
-            color: var(--green);
-        }
-
-        .member-box .member-title {}
-
-        .member-box small {
-            font-size: 12px;
-        }
-
-        .member-box .social a {
-            font-size: 15px;
-            color: var(--green);
-            padding: 5px;
-        }
-
-        .member-box .card-footer {
-            background-color: transparent;
-            border: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="/../Public/CSS/styleP.css">
 </head>
 
 <body>
+
+
     <?php require_once __DIR__ . '/../Partials/enTete.php' ?>
 
+
     <div class="work-1">
-        <h1 class="text-2">Friend User</h1>
+        <h1 class="text-2">Liste Amis de <?= Friend::getFullNameUser($_GET['id']) ?></h1>
     </div>
 
-    <div class="container   ">
+
+    <div class="container mb-4 mt-4">
         <div class="row">
-            <div class="col-md-4">
-                <div class="card member-box shadow-lg">
-                    <span class="shape"></span>
-                    <img class="card-img-top" src="https://placeimg.com/640/480/arch/any" alt="">
-                    <div class="card-body">
-                        <span class="member-degignation">Secretary</span>
-                        <h4 class="member-title">Hashim Ahmed</h4>
-                        <strong><i class="fas fa-at" style="color:black"></i>&nbsp;</strong><a href="mailto:secretary@basis.org.bd" class="text-dark">secretary@basis.org.bd</a><br>
-                        <strong><i class="fas fa-mobile" style="color:black"></i>&nbsp;</strong> 09612322747 (Ext: 103)
-                    </div>
-                    <div class="card-footer">
-                        <div class="social text-center">
-                            <a href="#">
-                                <i class="fas fa-user-plus fa-2x" style="color:black"></i>
-                            </a>
-                            <a href="#">
-                                <i class="far fa-eye fa-2x" style="color:black"></i>
-                            </a>
-                            <a href="#">
-                                <i class="far fa-comments fa-2x" style="color:black"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-4 offset-md-8 ">
+                <form action="" class="form-s">
+                    <input type="search" class="inp-s">
+                    <i class="fa fa-search"></i>
+                </form>
             </div>
-            <div class="col-md-4">
-                <div class="card member-box shadow-lg">
-                    <span class="shape"></span>
-                    <img class="card-img-top" src="https://placeimg.com/640/480/arch/any" alt="">
-                    <div class="card-body">
-                        <span class="member-degignation">Secretary</span>
-                        <h4 class="member-title">Hashim Ahmed</h4>
-                        <strong><i class="fas fa-at" style="color:black"></i>&nbsp;</strong><a href="mailto:secretary@basis.org.bd" class="text-dark">secretary@basis.org.bd</a><br>
-                        <strong><i class="fas fa-mobile" style="color:black"></i>&nbsp;</strong> 09612322747 (Ext: 103)
-                    </div>
-                    <div class="card-footer">
-                        <div class="social text-center">
-                            <a href="#">
-                                <i class="fas fa-user-plus fa-2x" style="color:black"></i>
-                            </a>
-                            <a href="#">
-                                <i class="far fa-eye fa-2x" style="color:black"></i>
-                            </a>
-                            <a href="#">
-                                <i class="far fa-comments fa-2x" style="color:black"></i>
-                            </a>
-                        </div>
-                    </div>
+        </div>
+    </div>
+
+    <section>
+        <div class="container mb-4 mt-4">
+            <?php
+            foreach (array_chunk($pureData, 4) as $data_users) {
+            ?>
+                <div class="row">
+                    <?php
+
+                    foreach ($data_users as $user) {
+                        if (true) {
+                    ?>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <?php
+
+                                if ($sql->rowCount() != 0) { ?>
+                                    <div class="our-team">
+                                        <div class="picture">
+                                            <img class="img-fluid im" src="<?= User::getAvatar($user['email']) ?>">
+                                        </div>
+                                        <div class="team-content">
+                                            <h4 class="name"><?= $user['nom'] . ' ' . $user['prenom'] ?></h4>
+                                            <h4 class="title"><?= $user['typeUser'] == 'Medecin' ? '<i class="fas fa-user-md fa-2x text-dark"></i> &nbsp ' . $user['specialite'] : '<i class="fas fa-user-circle fa-2x text-muted"></i> &nbsp Simple User' ?></h4>
+                                        </div>
+                                        <ul class="social">
+                                            <li><a href="../Pages/Profile.php?id=<?= $user['idFriend'] ?>" class="far fa-eye" aria-hidden="true"></a></li>
+                                            <li><a href="https://codepen.io/collection/XdWJOQ/" class="fas fa-user-friends" aria-hidden="true"></a></li>
+                                        </ul>
+                                    </div>
+                                    <?php
+                                }?>
+                            </div>
+                <?php
+                                }
+                            }
+                        }
+
+                ?>
+                <?= $sql->rowCount()==0?' <h4><i class="fab fa-creative-commons-zero"></i> &nbsp; Pas D\'Amis</h4>':'' ?>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card member-box shadow-lg">
-                    <span class="shape"></span>
-                    <img class="card-img-top" src="https://placeimg.com/640/480/arch/any" alt="">
-                    <div class="card-body">
-                        <span class="member-degignation">Secretary</span>
-                        <h4 class="member-title">Hashim Ahmed</h4>
-                        <strong><i class="fas fa-at" style="color:black"></i>&nbsp;</strong><a href="mailto:secretary@basis.org.bd" class="text-dark">secretary@basis.org.bd</a><br>
-                        <strong><i class="fas fa-mobile" style="color:black"></i>&nbsp;</strong> 09612322747 (Ext: 103)
-                    </div>
-                    <div class="card-footer">
-                        <div class="social text-center">
-                            <a href="#">
-                                <i class="fas fa-user-plus fa-2x" style="color:black"></i>
-                            </a>
-                            <a href="#">
-                                <i class="far fa-eye fa-2x" style="color:black"></i>
-                            </a>
-                            <a href="#">
-                                <i class="far fa-comments fa-2x" style="color:black"></i>
-                            </a>
-                        </div>
-                    </div>
+            <?php
+            
+            ?>
+        </div>
+    </section>
+
+    <?php
+        if($sql->rowCount()>1){
+    ?>
+
+    <div class="container mb-2 mt-2">
+        <div class="row">
+            <div class="col col-sm-4 offset-sm-4">
+                <div class="pagination">
+                    <ul>
+                        <?= $pagination ?>
+                    </ul>
                 </div>
             </div>
         </div>
-
-
     </div>
-
+    <?php
+        }
+    ?>
     <?php require_once __DIR__ . '/../Partials/enPied.php' ?>
 
     <?php require_once __DIR__ . '/../Partials/loader.php' ?>
