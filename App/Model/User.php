@@ -102,19 +102,20 @@ class User
         }
     }
 
-    public static function verifyNumber($number){
-        $insDB=Singleton::getInsDB();
-        $conn=$insDB->getConn();
-        try{
-            $req=$conn->prepare("SELECT * FROM users WHERE telephone=?");
-            $req->execute(['+509'.$number]);
-            if($req->rowCount()==0){
+    public static function verifyNumber($number)
+    {
+        $insDB = Singleton::getInsDB();
+        $conn = $insDB->getConn();
+        try {
+            $req = $conn->prepare("SELECT * FROM users WHERE telephone=?");
+            $req->execute(['+509' . $number]);
+            if ($req->rowCount() == 0) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
-        }catch(\Exception $e){
-            die('Error :'.$e);
+        } catch (\Exception $e) {
+            die('Error :' . $e);
         }
     }
 
@@ -167,7 +168,20 @@ class User
         }
     }
 
-  
+    public static function Search($query)
+    {
+        $insDB = Singleton::getInsDB();
+        $conn = $insDB->getConn();
+        try {
+            $req = $conn->prepare("SELECT * FROM users WHERE nom=? OR prenom=? OR specialite=?");
+            $req->execute([$query,$query,$query]);
+            if($req){
+                return $req;
+            }
+        } catch (\Exception $e) {
+            die('Error ' . $e);
+        }
+    }
 
     public static function getAvatar($email)
     {

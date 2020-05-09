@@ -43,47 +43,20 @@ require_once '../App/init.php';
 
                                     <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel"
                                         aria-labelledby="v-pills-nextgen-tab">
-                                        <form action="#" class="search-job">
+                                        <form action="../Pages/Search.php" class="search-job" method="GET">
                                             <div class="row">
-                                                <div class="col-md">
+                                                <div class="col-md-9">
                                                     <div class="form-group">
                                                         <div class="form-field">
                                                             <div class="icon"><span><i
                                                                         class="fas fa-briefcase"></i></span></div>
-                                                            <input type="text" class="form-control"
+                                                            <input type="text" name="query_search" class="form-control"
                                                                 placeholder="eg. Garphic. Web Developer">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md">
-                                                    <div class="form-group">
-                                                        <div class="form-field">
-                                                            <div class="select-wrap">
-                                                                <div class="icon"><span><i
-                                                                            class="fas fa-angle-down"></i></span></div>
-                                                                <select name="" id="" class="form-control">
-                                                                    <option value="">Category</option>
-                                                                    <option value="">Full Time</option>
-                                                                    <option value="">Part Time</option>
-                                                                    <option value="">Freelance</option>
-                                                                    <option value="">Internship</option>
-                                                                    <option value="">Temporary</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md">
-                                                    <div class="form-group">
-                                                        <div class="form-field">
-                                                            <div class="icon"><span><i
-                                                                        class="fas fa-map-marker-alt"></i></span></div>
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Location">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md">
+                                                
+                                                <div class="col-md-3">
                                                     <div class="form-group">
                                                         <div class="form-field">
                                                             <input type="submit" value="Search"

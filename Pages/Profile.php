@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once '../App/init.php';
-
 use App\Model\AuthFilter;
 use App\Model\User;
 use App\Model\Friend;
