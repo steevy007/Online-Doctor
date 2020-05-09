@@ -42,31 +42,33 @@ class Friend extends Singleton
         }
     }
 
-    public static function cancelRequest($id,$myId){
+    public static function cancelRequest($id, $myId)
+    {
         $inDB = Singleton::getInsDB();
         $conn = $inDB->getConn();
-        try{
-            $req=$conn->prepare("DELETE FROM friends WHERE idFriend=? AND myId=? AND accepted=?");
-            $req->execute([$id,$myId,'non']);
-            if($req){
+        try {
+            $req = $conn->prepare("DELETE FROM friends WHERE idFriend=? AND myId=? AND accepted=?");
+            $req->execute([$id, $myId, 'non']);
+            if ($req) {
                 return true;
             }
-        }catch(\Exception $e){
-            die('Error '.$e);
+        } catch (\Exception $e) {
+            die('Error ' . $e);
         }
     }
 
-    public static function cancelRequestUser($id,$myId){
+    public static function cancelRequestUser($id, $myId)
+    {
         $inDB = Singleton::getInsDB();
         $conn = $inDB->getConn();
-        try{
-            $req=$conn->prepare("DELETE FROM friends WHERE idFriend=? AND myId=? AND accepted=?");
-            $req->execute([$myId,$id,'non']);
-            if($req){
+        try {
+            $req = $conn->prepare("DELETE FROM friends WHERE idFriend=? AND myId=? AND accepted=?");
+            $req->execute([$myId, $id, 'non']);
+            if ($req) {
                 return true;
             }
-        }catch(\Exception $e){
-            die('Error '.$e);
+        } catch (\Exception $e) {
+            die('Error ' . $e);
         }
     }
 
@@ -122,7 +124,7 @@ class Friend extends Singleton
         $conn = $inDB->getConn();
         try {
             $req = $conn->prepare("SELECT * FROM friends WHERE idFriend=? AND myId=? AND accepted=?");
-            $req->execute([ $idUser,$myid, 'non']);
+            $req->execute([$idUser, $myid, 'non']);
             if ($req->rowCount() == 1) {
                 return true;
             }
@@ -156,7 +158,7 @@ class Friend extends Singleton
                 $req->execute(['oui', $id, $myId]);
                 if ($req) {
                     $req = $conn->prepare("INSERT INTO friends(idFriend,myId,accepted) VALUES(?,?,?)");
-                    $req->execute([ $myId, $id,'oui']);
+                    $req->execute([$myId, $id, 'oui']);
                     return true;
                 }
             }
@@ -181,15 +183,15 @@ class Friend extends Singleton
         }
     }
 
-    
+
     public static function verifyIfFriendAccepted($id, $myid)
     {
         $inDB = Singleton::getInsDB();
         $conn = $inDB->getConn();
         try {
             $req = $conn->prepare("SELECT count(*) as number From friends  WHERE idFriend=? AND myId=? AND accepted=?");
-            $req->execute([$myid,$id ,'non']);
-            $data=$req->fetch(\PDO::FETCH_ASSOC);
+            $req->execute([$myid, $id, 'non']);
+            $data = $req->fetch(\PDO::FETCH_ASSOC);
             if ($data['number'] == 1) {
                 return false;
             } else {
@@ -229,21 +231,21 @@ class Friend extends Singleton
         }
     }
 
-    public static function getFullNameUser($id){
+    public static function getFullNameUser($id)
+    {
         $insDB = Singleton::getInsDB();
         $conn = $insDB->getConn();
         try {
             $req = $conn->prepare("SELECT * FROM users INNER JOIN friends WHERE users.id=friends.myId AND friends.myId=? LIMIT 1");
             $req->execute([$id]);
-            if($req){
-                $data=$req->fetch(\PDO::FETCH_ASSOC);
-               if($data['nom']!='' AND $data['prenom']!=''){
-                   return $data['nom']. ' ' .$data['prenom'];
-               }else{
-                   return '';
-               }
+            if ($req) {
+                $data = $req->fetch(\PDO::FETCH_ASSOC);
+                if ($data['nom'] != '' and $data['prenom'] != '') {
+                    return $data['nom'] . ' ' . $data['prenom'];
+                } else {
+                    return '';
+                }
             }
-            
         } catch (\Exception $e) {
             die('Error ' . $e);
         }

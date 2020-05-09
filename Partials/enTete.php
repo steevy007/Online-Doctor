@@ -1,3 +1,7 @@
+<?php
+
+use App\Model\Friend;
+?>
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	<div class="container">
 		<a class="navbar-brand" href="../Pages/Home.php">Online Doctor</a>
@@ -41,8 +45,8 @@
 				<i class="fas fa-bell fa-2x"></i>
 				</a>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" href=""><i class="far fa-user"></i> Request <span>0</span></a>
-					<a class="dropdown-item" href=""><i class="fas fa-user-edit"></i> Message <span>0</span></a>
+					<a class="dropdown-item" href="../Pages/RequestFriend.php?id=<?=$_SESSION['session']['id']?>"><i class="far fa-user"></i>&nbsp; Request <span><?= Friend::getRequest($_SESSION['session']['id']) ?></span></a>
+					<a class="dropdown-item" href=""><i class="fas fa-user-edit"></i>&nbsp;  Message <span>0</span></a>
 				</div>
 			</div>
 		<?php
