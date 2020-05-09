@@ -9,7 +9,7 @@ use App\Model\Friend;
 if (isset($_GET['id']) and  !empty($_GET['id']) and is_numeric($_GET['id'])) {
     $dataReq = Friend::getAllFriendList($_GET['id']);
 } else {
-    header("Location:http://localhost/Online Doctor/Pages/Profile.php?id=308");
+    header("Location:https://online-doctorapp.000webhostapp.com/Pages/Profile.php?id=$_SESSION[session][id]");
     //http://localhost/Online%20Doctor/Pages/ListUserFriend.php?id=2
 }
 $data = $dataReq->fetchAll(\PDO::FETCH_ASSOC);
@@ -92,7 +92,7 @@ try {
 
 
     <div class="work-1">
-        <h1 class="text-2">Liste Amis de <?= Friend::getFullNameUser($_GET['id']) ?></h1>
+        <h1 class="text-2"><?= Friend::getFullNameUser($_GET['id'])!==''?'Liste Amis de '.Friend::getFullNameUser($_GET['id']):'Utilisateur Introuvable' ?></h1>
     </div>
 
 

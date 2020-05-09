@@ -51,7 +51,7 @@ AuthFilter::mustBeAdmin($_GET['id']);
                                         <div class="testimonial-main col-md-7">
                                             <h4><?= $value->nom . ' ' . $value->prenom ?></h4>
                                             <a href="../App/Controller/AcceptedFriend.ctrl.php?id=<?= $value->myId ?>" class="text-success"><i class="fas fa-check fa-2x"></i></a>
-                                            <a href="../App/Controller/RejectFriend.ctrl.php?id=<?= $value->myId ?>" class="text-danger"><i class="far fa-times-circle fa-2x"></i></a>
+                                            <a href="../App/Controller/CancelRequestUser.ctrl.php?id=<?= $value->myId ?>" class="text-danger"><i class="far fa-times-circle fa-2x"></i></a>
                                         </div>
                                     </div>
                                 </div>
