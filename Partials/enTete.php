@@ -46,7 +46,6 @@ use App\Model\Friend;
 				</a>
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="../Pages/RequestFriend.php?id=<?=$_SESSION['session']['id']?>"><i class="far fa-user"></i>&nbsp; Request <span><?= Friend::getRequest($_SESSION['session']['id']) ?></span></a>
-					<a class="dropdown-item" href=""><i class="fas fa-user-edit"></i>&nbsp;  Message <span>0</span></a>
 				</div>
 			</div>
 		<?php
