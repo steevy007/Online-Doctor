@@ -31,7 +31,7 @@ $(document).ready(function() {
                 timer: 1500
               })
               setTimeout(function(){
-                document.location.href='../Pages/Home.php';
+                document.location.href='https://online-doctorapp.000webhostapp.com/Pages/Accueil';
               }, 3000)
               
             }

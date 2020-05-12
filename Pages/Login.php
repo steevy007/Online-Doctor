@@ -38,7 +38,7 @@ AuthFilter::alreadyConnect();
 						</div>
 						<div class="form-group">
 							<div class="custom-control custom-checkbox">
-								<a href="../Pages/Home.php" style="color:whitesmoke"><i class="fas fa-home"></i> &nbsp; Retourner à la page d'Accueil</a>
+								<a href="https://online-doctorapp.000webhostapp.com/Pages/Accueil" style="color:whitesmoke"><i class="fas fa-home"></i> &nbsp; Retourner à la page d'Accueil</a>
 							</div>
 						</div>
 						<div class="d-flex justify-content-center mt-3 login_container">
@@ -49,7 +49,7 @@ AuthFilter::alreadyConnect();
 
 				<div class="mt-4">
 					<div class="d-flex justify-content-center links">
-						Don't have an account? <a href="../Pages/Register.php" class="ml-2" style="color:whitesmoke">Sign Up</a>
+						Don't have an account? <a href="https://online-doctorapp.000webhostapp.com/Pages/Inscription" class="ml-2" style="color:whitesmoke">Sign Up</a>
 					</div>
 					<div class="d-flex justify-content-center links">
 						<a href="#" style="color:whitesmoke">Forgot your password?</a>

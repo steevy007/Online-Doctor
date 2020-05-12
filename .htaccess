@@ -1,0 +1,24 @@
+RewriteEngine On
+RewriteRule ^Pages/Accueil$ Pages/Home.php 
+RewriteRule ^Pages/Contact$ Pages/Contact.php 
+RewriteRule ^Pages/Utilisateurs$ Pages/ListUser.php 
+RewriteRule ^Pages/Utilisateurs/Pages/([0-9]+)$ Pages/ListUser.php?page=$1 
+RewriteRule ^Pages/Amis/Pages/([0-9]+)$ Pages/Amis.php?page=$1 
+RewriteRule ^Pages/Propos$ Pages/About.php 
+RewriteRule ^Pages/Inscription$ Pages/Register.php 
+RewriteRule ^Pages/Connexion$ Pages/Login.php 
+RewriteRule ^Pages/FRequest/([0-9]+)$ Pages/RequestFriend.php?id=$1
+RewriteRule ^App/Controller/Deconnexion$ App/Controller/logout.ctrl.php
+RewriteRule ^Pages/Modification$ Pages/EditProfile.php 
+RewriteRule ^Pages/Profil/([0-9]+)$ Pages/Profile.php?id=$1
+RewriteRule ^Pages/Profil/([0-9]+)/Send/([a-z]+)$ Pages/Profile.php?id=$1&request=$2
+RewriteRule ^Pages/Profil/([0-9]+)/Cancel/([a-z]+)$ Pages/Profile.php?id=$1&CancelRequest=$2
+RewriteRule ^Pages/Profil/([0-9]+)/Accepted/([a-z]+)$ Pages/Profile.php?id=$1&isFriend=$2
+RewriteRule ^Pages/Amis/([0-9]+)$ Pages/ListUserFriend.php?id=$1
+RewriteRule ^Pages/Recherche?$ Pages/Search.php
+RewriteRule ^App/Controller/Like/([0-9]+)/([0-9]+)/([0-9]+)$ App/Controller/LikeStatus.ctrl.php?id_p=$1&id_user=$2&id_post=$3
+RewriteRule ^App/Controller/Dislike/([0-9]+)/([0-9]+)/([0-9]+)$ App/Controller/DisLikeStatus.ctrl.php?id_p=$1&id_user=$2&id_post=$3
+RewriteRule ^App/Controller/SRequest/([0-9]+)/([0-9]+)$ App/Controller/sendRequest.ctrl.php?myId=$1&id_user=$2
+RewriteRule ^App/Controller/Annuler/([0-9]+)$ App/Controller/CancelRequestUser.ctrl.php?id=$1
+RewriteRule ^App/Controller/AFriend/([0-9]+)$ App/Controller/AcceptedFriend.ctrl.php?id=$1
+RewriteRule ^App/Controller/CRequest/([0-9]+)$ App/Controller/CancelRequest.ctrl.php?id=$1

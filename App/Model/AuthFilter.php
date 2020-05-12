@@ -7,14 +7,14 @@ class AuthFilter
     public static function mustConnect()
     {
         if (!isset($_SESSION['session'])) {
-            header('Location:https://online-doctorapp.000webhostapp.com/Pages/Login.php');
+            header('Location:https://online-doctorapp.000webhostapp.com/Pages/Connexion');
         }
     }
 
     public static function alreadyConnect()
     {
         if (isset($_SESSION['session']) and !empty($_SESSION['session'])) {
-            header('Location:https://online-doctorapp.000webhostapp.com/Pages/Home.php');
+            header('Location:https://online-doctorapp.000webhostapp.com/Pages/Accueil');
         }
     }
 
@@ -22,7 +22,7 @@ class AuthFilter
     {
         if (isset($_SESSION['session']) and !empty($_SESSION['session'])) {
             if ($id_user != $_SESSION['session']['id']) {
-                header("Location:https://online-doctorapp.000webhostapp.com/Pages/Profile.php?id=$_SESSION[session][id]");
+                header("Location:https://online-doctorapp.000webhostapp.com/Pages/Profil/$_SESSION[session][id]");
             }
         }
     }

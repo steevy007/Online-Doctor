@@ -10,11 +10,11 @@ if (isset($_GET['id']) and !empty($_GET['id'])) {
     $objet = User::getUser($_GET['id']);
     $_SESSION['identifiant'] = $_GET['id'];
     if (empty($objet)) {
-        header('Location:/../../Pages/Profile.php?id=' . $_SESSION['session']['id'] . '');
+        header('Location:../Pages/Profil/' . $_SESSION['session']['id'] . '');
         $_SESSION['identifiant'] = [];
     }
 } else {
-    header('Location:/../../Pages/Home.php');
+    header('Location:../Pages/Accueil');
 }
 AuthFilter::mustConnect();
 
@@ -407,14 +407,14 @@ AuthFilter::mustConnect();
                                                             if (Friend::getNumberFriend($_SESSION['session']['id']) == 0) {
                                                                 echo "Aucune Relation &nbsp; <a href='../Pages/ListUser.php' class='btn btn-outline-primary btn-sm'>Faire Des Relation</a>";
                                                             } else {
-                                                                echo Friend::getNumberFriend($objet->id) . " Amis <a href='../Pages/ListUserFriend.php?id=$objet->id' class='btn btn-outline-primary btn-sm'>Visualiser</a> ";
+                                                                echo Friend::getNumberFriend($objet->id) . " Amis <a href='https://online-doctorapp.000webhostapp.com/Pages/Amis/$objet->id' class='btn btn-outline-primary btn-sm'>Visualiser</a> ";
                                                             
                                                             }
                                                         } else {
                                                             if (Friend::getNumberFriend($objet->id) == 0) {
                                                                 echo 'Aucune Relation &nbsp; <a class="btn btn-outline-primary btn-sm">Faire Des Relation</a>';
                                                             } else {
-                                                                echo Friend::getNumberFriend($objet->id) . " Amis <a href='../Pages/ListUserFriend.php?id=$objet->id' class='btn btn-outline-primary btn-sm'>Visualiser</a> ";
+                                                                echo Friend::getNumberFriend($objet->id) . " Amis <a href='https://online-doctorapp.000webhostapp.com/Pages/Amis/$objet->id' class='btn btn-outline-primary btn-sm'>Visualiser</a> ";
                                                             }
                                                         }
                                                         ?>
@@ -426,7 +426,7 @@ AuthFilter::mustConnect();
                                                         if ($_GET['id'] == $_SESSION['session']['id']) {
 
                                                         ?>
-                                                            <a href="../Pages/RequestFriend.php?id=<?= $objet->id ?>" class="btn btn-outline-info mt-2"><i class="fab fa-meetup"></i>
+                                                            <a href="https://online-doctorapp.000webhostapp.com/Pages/FRequest/<?= $objet->id ?>" class="btn btn-outline-info mt-2"><i class="fab fa-meetup"></i>
                                                                 <span><?= Friend::getRequest($objet->id) ?></span> Friend
                                                                 Request</a>
                                                         <?php
@@ -438,7 +438,7 @@ AuthFilter::mustConnect();
                                                             if (Friend::verifyRequest($_SESSION['session']['id'], $objet->id)) {
 
                                                         ?>
-                                                                <a href="../App/Controller/CancelRequest.ctrl.php?id=<?= $objet->id ?>" class="btn btn-outline-info mt-2"><i class="fas fa-plus"></i>
+                                                                <a href="https://online-doctorapp.000webhostapp.com/App/Controller/Annuler/<?= $objet->id ?>" class="btn btn-outline-info mt-2"><i class="fas fa-plus"></i>
                                                                     Annuler Demande</a>
                                                                 <?php
                                                             } else {
@@ -446,7 +446,7 @@ AuthFilter::mustConnect();
                                                                     // echo $objet->id .' '. $_SESSION['session']['id'];
                                                                     if (Friend::verifyIfFriendAccepted($objet->id, $_SESSION['session']['id']) === true) {
                                                                 ?>
-                                                                        <a href="../App/Controller/sendRequest.ctrl.php?myId=<?= $_SESSION['session']['id'] ?>&id_user=<?= $objet->id ?>" class="btn btn-outline-info mt-2"><i class="fas fa-plus"></i>
+                                                                        <a href="https://online-doctorapp.000webhostapp.com/App/Controller/SRequest/<?= $_SESSION['session']['id'] ?>/<?= $objet->id ?>" class="btn btn-outline-info mt-2"><i class="fas fa-plus"></i>
                                                                             Suivre</a>
                                                                     <?php
                                                                     } else {
@@ -635,9 +635,9 @@ AuthFilter::mustConnect();
     <?php require_once __DIR__ . '/../Partials/loader.php' ?>
 
     <?php require_once __DIR__ . '/../Ressources/footer.js.php' ?>
-    <script src="../Public/JS/status.js"></script>
-    <script src="../Public/JS/postStat.js"></script>
-    <script src="../Public/JS/TraitPostStatus.js"></script>
+    <script src="https://online-doctorapp.000webhostapp.com/Public/JS/status.js"></script>
+    <script src="https://online-doctorapp.000webhostapp.com/Public/JS/postStat.js"></script>
+    <script src="https://online-doctorapp.000webhostapp.com/Public/JS/TraitPostStatus.js"></script>
     <?php
     if (isset($_GET['id']) and isset($_GET['request'])) {
         if ($_GET['request'] == 'true') {
@@ -651,8 +651,8 @@ AuthFilter::mustConnect();
         if ($_GET['isFriend'] == 'true') {
             echo "<script>alertify.success('Vous Etes Maintenant connecte');</script>";
         }
-    }else if (isset($_GET['cancelRequest']) and isset($_GET['id'])) {
-        if ($_GET['cancelRequest'] == 'true') {
+    }else if (isset($_GET['CancelRequest']) and isset($_GET['id'])) {
+        if ($_GET['CancelRequest'] == 'true') {
             echo "<script>alertify.success('Demande Annuler');</script>";
         }
     }

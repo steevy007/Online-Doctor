@@ -15,7 +15,8 @@ $(document).ready(function () {
                 if(result!='success'){
                     alertify.warning(result);
                 }else{
-                    document.location.href = '../Pages/Home.php?connect=true';
+                    
+                    document.location.href = 'https://online-doctorapp.000webhostapp.com/Pages/Accueil?connect=true';
                 }
             }
         });

@@ -93,7 +93,7 @@ try {
     <div class="container mb-4 mt-4">
         <div class="row">
             <div class="col-md-4 offset-md-8 ">
-                <form action="../Pages/Search.php" class="form-s" method="GET">
+                <form action="https://online-doctorapp.000webhostapp.com/Pages/Recherche?" class="form-s" method="GET">
                     <input type="search" name="query_search" class="inp-s">
                     <i class="fa fa-search"></i>
                 </form>
@@ -128,7 +128,7 @@ try {
                                                 <h4 class="title"><?= $user['typeUser'] == 'Medecin' ? '<i class="fas fa-user-md fa-2x text-dark"></i> &nbsp ' . $user['specialite'] : '<i class="fas fa-user-circle fa-2x text-muted"></i> &nbsp Simple User' ?></h4>
                                             </div>
                                             <ul class="social">
-                                                <li><a href="../Pages/Profile.php?id=<?= $user['id'] ?>" class="far fa-eye" aria-hidden="true"></a></li>
+                                                <li><a href="https://online-doctorapp.000webhostapp.com/Pages/Profil/<?= $user['id'] ?>" class="far fa-eye" aria-hidden="true"></a></li>
                                                 <li><a href="https://codepen.io/collection/XdWJOQ/" class="fas fa-user-friends" aria-hidden="true"></a></li>
                                             </ul>
                                         </div>

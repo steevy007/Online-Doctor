@@ -69,7 +69,8 @@ $(document).ready(function () {
                         timer: 1500
                       })
                       setTimeout(function(){
-                        document.location.href = '../Pages/Profile.php?id='+id;
+                          
+                        document.location.href = 'https://online-doctorapp.000webhostapp.com/Pages/Profil/'+id;
                       },1550);
                     $("#err").css('display','none');
                 }

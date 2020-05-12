@@ -32,12 +32,12 @@ $pagination = '';
 if ($last_page != 1) {
     if ($page_num > 1) {
         $previous = $page_num - 1;
-        $pagination .= '<li class="prev "><a href="../Pages/ListUser.php?page=' . $previous . '">&lt;</a></li>';
+        $pagination .= '<li class="prev "><a href="https://online-doctorapp.000webhostapp.com/Pages/Utilisateurs/Pages/' . $previous . '">&lt;</a></li>';
         //$pagination .= '<a href="../Pages/ListUser.php?page='.$previous.'">Précédent</a> &nbsp; &nbsp;';
 
         for ($i = $page_num - $nbre_pages_max_gauche_et_droite; $i < $page_num; $i++) {
             if ($i > 0) {
-                $pagination .= '<li><a href="../Pages/ListUser.php?page=' . $i . '">' . $i . '</a></li>';
+                $pagination .= '<li><a href="https://online-doctorapp.000webhostapp.com/Pages/Utilisateurs/Pages/' . $i . '">' . $i . '</a></li>';
                 //$pagination .= '<a href="../Pages/ListUser.php?page='.$i.'">'.$i.'</a> &nbsp;';
             }
         }
@@ -46,7 +46,7 @@ if ($last_page != 1) {
     //$pagination .= '<span class="active">'.$page_num.'</span>&nbsp;';
 
     for ($i = $page_num + 1; $i <= $last_page; $i++) {
-        $pagination .= '<li><a href="../Pages/ListUser.php?page=' . $i . '">' . $i . '</a></li>';
+        $pagination .= '<li><a href="https://online-doctorapp.000webhostapp.com/Pages/Utilisateurs/Pages/' . $i . '">' . $i . '</a></li>';
         //$pagination .= '<a href="../Pages/ListUser.php?page='.$i.'">'.$i.'</a> ';
 
         if ($i >= $page_num + $nbre_pages_max_gauche_et_droite) {
@@ -56,7 +56,7 @@ if ($last_page != 1) {
 
     if ($page_num != $last_page) {
         $next = $page_num + 1;
-        $pagination .= '<li class="next"><a href="../Pages/ListUser.php?page=' . $next . '">&gt;</a></li>';
+        $pagination .= '<li class="next"><a href="https://online-doctorapp.000webhostapp.com/Pages/Utilisateurs/Pages/' . $next . '">&gt;</a></li>';
         // $pagination .= '<a href="../Pages/ListUser.php?page='.$next.'">Suivant</a> ';
     }
 }
@@ -93,7 +93,8 @@ try {
     <div class="container mb-4 mt-4">
         <div class="row">
             <div class="col-md-4 offset-md-8 ">
-                <form action="../Pages/Search.php" class="form-s" method="GET">
+            
+                <form action="https://online-doctorapp.000webhostapp.com/Pages/Recherche?" class="form-s" method="GET">
                     <input type="search" name="query_search" class="inp-s">
                     <i class="fa fa-search"></i>
                 </form>
@@ -133,7 +134,7 @@ try {
                                             <h4 class="title"><?= $user['typeUser'] == 'Medecin' ? '<i class="fas fa-user-md fa-2x text-dark"></i> &nbsp ' . $user['specialite'] : '<i class="fas fa-user-circle fa-2x text-muted"></i> &nbsp Simple User' ?></h4>
                                         </div>
                                         <ul class="social">
-                                            <li><a href="../Pages/Profile.php?id=<?= $user['id'] ?>" class="far fa-eye" aria-hidden="true"></a></li>
+                                            <li><a href="https://online-doctorapp.000webhostapp.com/Pages/Profil/<?= $user['id'] ?>" class="far fa-eye" aria-hidden="true"></a></li>
                                             <li><a href="https://codepen.io/collection/XdWJOQ/" class="fas fa-user-friends" aria-hidden="true"></a></li>
                                         </ul>
                                     </div>

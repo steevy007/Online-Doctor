@@ -4,7 +4,7 @@ $(document).ready(function () {
         var text = $("#text").val();
         $.ajax({
             type: 'POST',
-            url: '../App/Controller/PostStatus.ctrl.php',
+            url: 'https://online-doctorapp.000webhostapp.com/App/Controller/PostStatus.ctrl.php',
             data: {
                 text: text
             },
@@ -22,6 +22,6 @@ $(document).ready(function () {
 
     });
     setInterval(function () {
-        $("#listing").load("../App/Controller/getStatus.ctrl.php").fadeIn("slow");
+        $("#listing").load("https://online-doctorapp.000webhostapp.com/App/Controller/getStatus.ctrl.php").fadeIn("slow");
     },1000);
 });

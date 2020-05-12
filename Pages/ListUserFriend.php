@@ -10,7 +10,7 @@ if (isset($_GET['id']) and  !empty($_GET['id']) and is_numeric($_GET['id'])) {
     $dataReq = Friend::getAllFriendList($_GET['id']);
 } else {
     header("Location:https://online-doctorapp.000webhostapp.com/Pages/Profile.php?id=$_SESSION[session][id]");
-    //http://localhost/Online%20Doctor/Pages/ListUserFriend.php?id=2
+    //https://online-doctorapp.000webhostapp.com/Pages/ListUserFriend.php?id=2
 }
 $data = $dataReq->fetchAll(\PDO::FETCH_ASSOC);
 $nbre_total_articles = $dataReq->rowCount();
@@ -37,12 +37,12 @@ $pagination = '';
 if ($last_page != 1) {
     if ($page_num > 1) {
         $previous = $page_num - 1;
-        $pagination .= '<li class="prev "><a href="../Pages/ListUser.php?page=' . $previous . '">&lt;</a></li>';
+        $pagination .= '<li class="prev "><a href="https://online-doctorapp.000webhostapp.com/Pages/Amis/Pages/' . $previous . '">&lt;</a></li>';
         //$pagination .= '<a href="../Pages/ListUser.php?page='.$previous.'">Précédent</a> &nbsp; &nbsp;';
 
         for ($i = $page_num - $nbre_pages_max_gauche_et_droite; $i < $page_num; $i++) {
             if ($i > 0) {
-                $pagination .= '<li><a href="../Pages/ListUser.php?page=' . $i . '">' . $i . '</a></li>';
+                $pagination .= '<li><a href="https://online-doctorapp.000webhostapp.com/Pages/Amis/Pages/' . $i . '">' . $i . '</a></li>';
                 //$pagination .= '<a href="../Pages/ListUser.php?page='.$i.'">'.$i.'</a> &nbsp;';
             }
         }
@@ -51,7 +51,7 @@ if ($last_page != 1) {
     //$pagination .= '<span class="active">'.$page_num.'</span>&nbsp;';
 
     for ($i = $page_num + 1; $i <= $last_page; $i++) {
-        $pagination .= '<li><a href="../Pages/ListUser.php?page=' . $i . '">' . $i . '</a></li>';
+        $pagination .= '<li><a href="https://online-doctorapp.000webhostapp.com/Pages/Amis/Pages/' . $i . '">' . $i . '</a></li>';
         //$pagination .= '<a href="../Pages/ListUser.php?page='.$i.'">'.$i.'</a> ';
 
         if ($i >= $page_num + $nbre_pages_max_gauche_et_droite) {
@@ -61,7 +61,7 @@ if ($last_page != 1) {
 
     if ($page_num != $last_page) {
         $next = $page_num + 1;
-        $pagination .= '<li class="next"><a href="../Pages/ListUser.php?page=' . $next . '">&gt;</a></li>';
+        $pagination .= '<li class="next"><a href="https://online-doctorapp.000webhostapp.com/Pages/Amis/Pages/' . $next . '">&gt;</a></li>';
         // $pagination .= '<a href="../Pages/ListUser.php?page='.$next.'">Suivant</a> ';
     }
 }
@@ -69,8 +69,8 @@ $inDB = Singleton::getInsDB();
 $conn = $inDB->getConn();
 $pureData = [];
 try {
-    $sql = $conn->prepare("SELECT * FROM users INNER JOIN friends WHERE users.id=friends.idFriend AND friends.myId=? ORDER BY idFriend ASC $limit");
-    $sql->execute([$_GET['id']]);
+    $sql = $conn->prepare("SELECT * FROM users INNER JOIN friends WHERE users.id=friends.idFriend AND friends.myId=? AND friends.accepted=? ORDER BY idFriend ASC $limit");
+    $sql->execute([$_GET['id'], 'oui']);
     $pureData = $sql->fetchAll(\PDO::FETCH_ASSOC);
 } catch (\Exception $e) {
 }
@@ -92,7 +92,7 @@ try {
 
 
     <div class="work-1">
-        <h1 class="text-2"><?= Friend::getFullNameUser($_GET['id'])!==''?'Liste Amis de '.Friend::getFullNameUser($_GET['id']):'Utilisateur Introuvable' ?></h1>
+        <h1 class="text-2"><?= Friend::getFullNameUser($_GET['id']) !== '' ? 'Liste Amis de ' . Friend::getFullNameUser($_GET['id']) : 'Utilisateur Introuvable' ?></h1>
     </div>
 
 
@@ -111,17 +111,14 @@ try {
         <div class="container mb-4 mt-4">
             <?php
             foreach (array_chunk($pureData, 4) as $data_users) {
-            ?>
-                <div class="row">
-                    <?php
+                ?>
+                    <div class="row">
+                        <?php
 
-                    foreach ($data_users as $user) {
-                        if (true) {
-                    ?>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <?php
-
-                                if ($sql->rowCount() != 0) { ?>
+                        foreach ($data_users as $user) {
+                            if (true) {
+                        ?>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                     <div class="our-team">
                                         <div class="picture">
                                             <img class="img-fluid im" src="<?= User::getAvatar($user['email']) ?>">
@@ -131,44 +128,46 @@ try {
                                             <h4 class="title"><?= $user['typeUser'] == 'Medecin' ? '<i class="fas fa-user-md fa-2x text-dark"></i> &nbsp ' . $user['specialite'] : '<i class="fas fa-user-circle fa-2x text-muted"></i> &nbsp Simple User' ?></h4>
                                         </div>
                                         <ul class="social">
-                                            <li><a href="../Pages/Profile.php?id=<?= $user['idFriend'] ?>" class="far fa-eye" aria-hidden="true"></a></li>
+                                            <li><a href="https://online-doctorapp.000webhostapp.com/Pages/Profil/<?= $user['idFriend'] ?>" class="far fa-eye" aria-hidden="true"></a></li>
                                             <li><a href="https://codepen.io/collection/XdWJOQ/" class="fas fa-user-friends" aria-hidden="true"></a></li>
                                         </ul>
                                     </div>
-                                    <?php
-                                }?>
-                            </div>
-                <?php
-                                }
+                                </div>
+                        <?php
                             }
                         }
+                        ?>
+                    </div>
+                <?php
+                }
+
+
+                    ?>
+                    <?= $sql->rowCount() == 0 ? ' <h4><i class="fab fa-creative-commons-zero"></i> &nbsp; Pas D\'Amis</h4>' : '' ?>
+                </div>
+                <?php
 
                 ?>
-                <?= $sql->rowCount()==0?' <h4><i class="fab fa-creative-commons-zero"></i> &nbsp; Pas D\'Amis</h4>':'' ?>
-                </div>
-            <?php
-            
-            ?>
         </div>
     </section>
 
     <?php
-        if($sql->rowCount()>1){
+    if ($sql->rowCount() > 1) {
     ?>
 
-    <div class="container mb-2 mt-2">
-        <div class="row">
-            <div class="col col-sm-4 offset-sm-4">
-                <div class="pagination">
-                    <ul>
-                        <?= $pagination ?>
-                    </ul>
+        <div class="container mb-2 mt-2">
+            <div class="row">
+                <div class="col col-sm-4 offset-sm-4">
+                    <div class="pagination">
+                        <ul>
+                            <?= $pagination ?>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     <?php
-        }
+    }
     ?>
     <?php require_once __DIR__ . '/../Partials/enPied.php' ?>
 

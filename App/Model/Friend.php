@@ -161,6 +161,7 @@ class Friend extends Singleton
                     $req->execute([$myId, $id, 'oui']);
                     return true;
                 }
+                return true;
             }
         } catch (\Exception $e) {
             die('Error ' . $e);
@@ -222,8 +223,8 @@ class Friend extends Singleton
         $inDB = Singleton::getInsDB();
         $conn = $inDB->getConn();
         try {
-            $req = $conn->prepare("SELECT * FROM users INNER JOIN friends WHERE users.id=friends.idFriend AND friends.myId=?");
-            $req->execute([$id]);
+            $req = $conn->prepare("SELECT * FROM users INNER JOIN friends WHERE users.id=friends.idFriend AND friends.myId=? AND friends.accepted=?");
+            $req->execute([$id,'oui']);
             if ($req) {
                 return $req;
             }

@@ -9,7 +9,7 @@ class Connect
 
     public function __construct(){
         try{
-            $this->conn=new \PDO("mysql:host=localhost;dbname=onlinedoctor", $this->USERNAME, $this->PASSWORD);
+            $this->conn=new \PDO("mysql:host=localhost;dbname=id13509939_onlinedoctor", $this->USERNAME, $this->PASSWORD);
             $this->conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         }catch(\PDOException $e){
            

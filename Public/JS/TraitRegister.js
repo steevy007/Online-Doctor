@@ -66,7 +66,7 @@ $(document).ready(function () {
                       })
                         setTimeout(function(){
                             //document.location.href = '../Pages/Home.php';
-                            document.location.href = '../Pages/Login.php?register=true';
+                            document.location.href = 'https://online-doctorapp.000webhostapp.com/Pages/Connexion?register=true';
                         },3000);
                         
 
